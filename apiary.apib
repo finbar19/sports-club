@@ -1,0 +1,145 @@
+FORMAT: 1A
+HOST: http://
+
+# Sports Club
+
+A simple API allowing consumers to view polls and vote in them.
+
+# Group Membership
+
+## Members Collection [/members]
+
+### List All Members [GET]
+
++ Response 200 (application/json)
+
+        {
+            "members": [
+                {
+                    "name" : "rod",
+                    "membership_type" : "player"
+                },
+                {
+                    "name" : "jayne",
+                    "membership_type" : "member"
+                },
+                {
+                    "name" : "fred",
+                    "membership_type" : "player"
+                }
+            ]
+        }
+
+# Group Players
+
+## Available Players [/members/available]
+
+### List Available Players [GET]
+
++ Request (application/json)
+
+    + Attributes
+      + date
+
++ Response 200 (application/json)
+
+        {
+            "players": [
+                {
+                    "name" : "rod",
+                    "positions" : [
+                    "position" : "centre",
+                    "position" : "winger",
+                    "position" : "full_back"
+                    ]
+                },
+                {
+                    "name" : "brett",
+                    "positions" : [
+                        "position" : "prop",
+                        "position" : "hooker"
+                    ]
+                },
+                {
+                    "name" : "fred",
+                    "positions" : [
+                        "position" : "winger"
+                    ]
+                }
+            ]
+        }
+
+# Group Team
+
+## Team Collection [/team/{team_name}]
+
+### List Team Members [GET]
+
++ Parameters
+    + team_name: 'development' (string)
+
++ Response 200 (application/json)
+    
+    + Attributes (array[Team])
+    
+    + Body
+    
+            {
+                "team": [
+                   {
+                        "name" : "rod",
+                        "prefered_position" : "centre",
+                        "positions": [
+                            "position" : "centre",
+                            "position" : "winger",
+                            "position" : "full_back"
+                            ]
+                   },
+                   {
+                        "name" : "brett",
+                        "prefered_position" : "prop",
+                        "positions" : [
+                            "position" : "prop",
+                            "position" : "hooker"
+                            ]
+                    },
+                    {
+                        "name" : "fred",
+                        "prefered_position" : "winger",
+                        "positions" : [
+                            "position" : "winger"
+                            ]
+                    }
+                ]
+            }
+
+# Data Structures
+
+## MembershipType (object)
++ membership: player (enum[string])
+  + member
+  + player
+  + vp
+
+## Member (object)
++ firstname
++ lastname
++ nickname
++ Include Positions
+
+## Positions (object)
++ positon: hooker (enum[string])
+  + prop
+  + second_row
+  + hooker
+  + flanker
+  + centre
+
+## Player (object)
++ name: Ryan (string)
++ `prefered_position`: centre (string)
++ positions (array)
+
+## Team (object)
++ Team (object)
+   + Include Player
