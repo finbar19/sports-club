@@ -39,7 +39,7 @@ A simple API allowing consumers to view polls and vote in them.
 + Request (application/json)
 
     + Attributes
-      + date
+      + date: 22/07/2018 (string)
 
 + Response 200 (application/json)
 
@@ -80,14 +80,14 @@ A simple API allowing consumers to view polls and vote in them.
 
 + Response 200 (application/json)
     
-    + Attributes (array[Team])
-    
+    + Attributes (array[TeamPlayerList])
+
     + Body
-    
+
             {
                 "team": [
                    {
-                        "name" : "rod",
+                        "nickname" : "rod",
                         "prefered_position" : "centre",
                         "positions": [
                             "position" : "centre",
@@ -96,7 +96,7 @@ A simple API allowing consumers to view polls and vote in them.
                             ]
                    },
                    {
-                        "name" : "brett",
+                        "nickname" : "brett",
                         "prefered_position" : "prop",
                         "positions" : [
                             "position" : "prop",
@@ -104,7 +104,7 @@ A simple API allowing consumers to view polls and vote in them.
                             ]
                     },
                     {
-                        "name" : "fred",
+                        "nickname" : "fred",
                         "prefered_position" : "winger",
                         "positions" : [
                             "position" : "winger"
@@ -113,7 +113,70 @@ A simple API allowing consumers to view polls and vote in them.
                 ]
             }
 
+# Group Player
+
+## Player Collection [/player/{?member_id}]
+
+### List Player Details [GET]
+
++ Parameters
+    + member_id: 1 (number)
+
++ Response 200 (application/json)
+    
+    + Attributes (Member)
+
+### Change Player Details [POST]
+
++ Response 200 (application/json)
+    
+    + Attributes (Member)
+
+    + Body
+
+            {
+                  "firstname": "ben",
+                  "lastname": "smith",
+                  "nickname": "tiny",
+                  "prefered_position": "hooker",
+                  "positions": [
+                        {
+                            "positon": "hooker",
+                            "position": "`tight_head_prop`"
+                        }
+                  ]
+            }
+
+## List Players Availability  [/player/availability]
+
+### All Players Current Week Availability [GET]
+
++ Response 200 (application/json)
+    
+    + Attributes (Player)
+
+## A Players Availability  [/player/{member_id}/availability]
++ Parameters
+    + member_id: 1 (number)
+
+
+# Group Coaches
+
+## Coaches Collection [/coaches]
+Information on the clubs coaches
+
+### List Coaches Details [GET]
+
++ Response 200 (application/json)
+    
+    + Attributes (Coach)
+
+
 # Data Structures
+
+## Person (object)
++ firstname: ben (string) 
++ lastname: smith (string)
 
 ## MembershipType (object)
 + membership: player (enum[string])
@@ -121,11 +184,13 @@ A simple API allowing consumers to view polls and vote in them.
   + player
   + vp
 
-## Member (object)
-+ firstname
-+ lastname
-+ nickname
-+ Include Positions
+## Member (Person)
++ Include MembershipType
+
+## Player (Person)
++ nickname: smithy (string)
++ `prefered_position`: hooker (string)
++ positions (array[Positions])
 
 ## Positions (object)
 + positon: hooker (enum[string])
@@ -135,11 +200,36 @@ A simple API allowing consumers to view polls and vote in them.
   + flanker
   + centre
 
-## Player (object)
-+ name: Ryan (string)
-+ `prefered_position`: centre (string)
-+ positions (array)
-
-## Team (object)
+## TeamPlayerList (object)
 + Team (object)
-   + Include Player
+  + Include Player
+
+## Teams (object)
++ team: first (enum[string])
+  + first
+  + second
+  + development
+  + vets
+  + colts
+  + under_7s
+  + under_8s
+  + under_9s
+  + under_10s
+  + under_11s
+  + under_12s
+  + under_13s
+  + under_14s
+  + under_15s
+  + under_16s
+  + vipers
+
+## Coach (Person)
++ teams (array[Teams])
++ qualifications (array[CoachingQuals])
+
+## CoachingQuals (object)
++ course: rugby_ready (enum[string])
+  + scrum_factory
+  + rugby_ready
+  + level_2
+  + level_3
